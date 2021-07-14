@@ -1,0 +1,70 @@
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+@Service
+public class PiqueModelService {
+    @Autowired
+    FBInitialize db;
+
+    public static final String COLLECTION_NAME = "rawPiqueJsons";
+
+    public void getParsedPiqueFile(String id)  throws ExecutionException, InterruptedException, IOException {
+        DocumentReference docRef = db.getFirebase().collection(COLLECTION_NAME).document(id);
+// asynchronously retrieve the document
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+// ...
+// future.get() blocks on response
+        DocumentSnapshot document = future.get();
+        if (document.exists()) {
+            System.out.println("Document data: " + document.getData());
+        } else {
+            System.out.println("No such document!");
+        }
+
+        /*DocumentReference docRef = db.getFirebase().collection("rawPiqueJsons").document(id);
+        System.out.println(docRef.getId());
+        System.out.println(docRef.get());
+        // asynchronously retrieve the document
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null && document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+        // block on response
+        DocumentSnapshot document = future.get();
+        System.out.println(document.get("json"));
+        System.out.println(document.getData());
+
+        PiqueParsedModel model = null;
+        if (document.exists()) {
+            model = document.toObject(PiqueParsedModel.class);
+            System.out.println(model.getProjectName());
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.valueToTree(model.getJson());
+            ObjectNode node = Parser.getModel(root, mapper);
+            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
+            Map<String, String> map = mapper.readValue(json, Map.class);
+            Map<String, Map> parsed = new HashMap<>();
+            parsed.put("json", map);
+            PiqueParsedModel parsedModel = new PiqueParsedModel(parsed, model.getProjectName());
+            System.out.println(parsedModel.getProjectName());
+            return parsedModel;
+        } else {
+            return null;
+        }
+    }*/
+    }
+
+}

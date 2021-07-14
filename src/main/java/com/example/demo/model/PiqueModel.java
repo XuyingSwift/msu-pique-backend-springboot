@@ -12,4 +12,11 @@ public class PiqueModel {
     public void setTqi(Map<String, Object> tqi) {
         this.tqi = tqi;
     }
+
+    public PiqueModel(Map<String, Object> tqi) {
+        this.tqi = tqi;
+    }
+
+    public PiqueModel() {
+    }
 }

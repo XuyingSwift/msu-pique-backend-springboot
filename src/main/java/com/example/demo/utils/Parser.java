@@ -12,14 +12,14 @@ public class Parser {
         ObjectNode objectNode = mapper.createObjectNode();
 
         //Float value = root.get("factors").get("tqi").get("Binary Security Quality").get("value").floatValue();
-        Float value = root.get("tqi").get("Binary Security Quality").get("value").floatValue();
+        Float value = root.get("Binary Security Quality").get("value").floatValue();
 
         objectNode.put("name", "Binary Security Quality");
         objectNode.put("value", value);
         //Iterator<JsonNode> kids = root.get("factors").get("tqi").get("Binary Security Quality").get("children").elements();
-        Iterator<JsonNode> kids = root.get("tqi").get("Binary Security Quality").get("children").elements();
+        Iterator<JsonNode> kids = root.get("Binary Security Quality").get("children").elements();
         //Iterator<JsonNode> weights = root.get("factors").get("tqi").get("Binary Security Quality").get("weights").elements();
-        Iterator<JsonNode> weights = root.get("tqi").get("Binary Security Quality").get("weights").elements();
+        Iterator<JsonNode> weights = root.get("Binary Security Quality").get("weights").elements();
         ArrayNode qa = getQuality_aspects(kids, weights, mapper);
         objectNode.put("children", qa);
         return objectNode;
